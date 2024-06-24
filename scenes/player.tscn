@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://cv7od1cyo030h"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_1pigs"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hbd7t"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_bfvby"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_6nerl"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0ojal"]
+
+[node name="player" type="CharacterBody3D"]
+script = ExtResource("1_1pigs")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_hbd7t")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_bfvby")
+skeleton = NodePath("")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.49986, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.962204)
+mesh = SubResource("BoxMesh_6nerl")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0223209, -0.999751, 0, 0.999751, 0.0223209, 0, 0, 0, 1, 0, 1.26023, 0)
+mesh = SubResource("CylinderMesh_0ojal")

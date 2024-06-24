@@ -1,0 +1,40 @@
+[gd_scene load_steps=9 format=3 uid="uid://nkdssy5dijtg"]
+
+[ext_resource type="PackedScene" uid="uid://w4sr8i5y61ec" path="res://models/environment.blend" id="1_p7xs0"]
+[ext_resource type="PackedScene" uid="uid://cv7od1cyo030h" path="res://scenes/player.tscn" id="2_bwi6o"]
+[ext_resource type="Script" path="res://scripts/environment.gd" id="2_rgr1o"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ydsp5"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_6q7af"]
+sky_material = SubResource("ProceduralSkyMaterial_ydsp5")
+
+[sub_resource type="Environment" id="Environment_t0y61"]
+background_mode = 2
+sky = SubResource("Sky_6q7af")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5bahx"]
+albedo_color = Color(0.686275, 0.537255, 0.282353, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1eehh"]
+albedo_color = Color(0.45098, 0.501961, 1, 1)
+
+[node name="environment" instance=ExtResource("1_p7xs0")]
+script = ExtResource("2_rgr1o")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." index="0"]
+environment = SubResource("Environment_t0y61")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." index="1"]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Plane" parent="." index="2"]
+surface_material_override/0 = SubResource("StandardMaterial3D_5bahx")
+surface_material_override/1 = SubResource("StandardMaterial3D_1eehh")
+
+[node name="Player" parent="." index="3" instance=ExtResource("2_bwi6o")]
