@@ -2,10 +2,44 @@ extends Control
 
 var allSlots = ["Slot1", "Slot2", "Slot3", "Slot4", "Slot5", "Slot6", "Slot7", "Slot8", "Slot9"];
 
+var fakeToolbar = {
+	"Slot1": {
+		"itemName": "The invisible item",
+	},
+	"Slot2": {
+		"itemName": "A fake item",
+	},
+	"Slot3": {
+		"itemName": "A silent fart",
+	},
+	"Slot4": {
+		"itemName": "Literally nothing",
+	},
+	"Slot5": {
+		"itemName": "Me when im not there",
+	},
+	"Slot6": {
+		"itemName": "Space",
+	},
+	"Slot7": {
+		"itemName": "What could have been",
+	},
+	"Slot8": {
+		"itemName": "The sword of no mesh",
+	},
+	"Slot9": {
+		"itemName": "Whoops, I left the item at home",
+	}
+}
+
+func setFakeToolbarItem(itemName):
+	get_node("MarginContainer/CenterContainer/ItemName").text = itemName;
+
 func setActiveSlot(slotName):
 	for slot in allSlots:
 		if slot == slotName:
 			get_node("MarginContainer/HBoxContainer/ToolbarContainer/" + slot + "/TextureRect").texture = load("res://assets/static/player/hud/HUD_selected_toolbar.png");
+			setFakeToolbarItem(fakeToolbar[slot]["itemName"]);
 		else:
 			get_node("MarginContainer/HBoxContainer/ToolbarContainer/" + slot + "/TextureRect").texture = load("res://assets/static/player/hud/HUD_unselected_toolbar.png");
 
