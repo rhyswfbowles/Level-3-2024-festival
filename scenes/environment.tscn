@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://w4sr8i5y61ec" path="res://models/environment.blend" id="1_p7xs0"]
 [ext_resource type="PackedScene" uid="uid://cv7od1cyo030h" path="res://scenes/player.tscn" id="2_bwi6o"]
-[ext_resource type="Script" path="res://scripts/environment/environment.gd" id="2_vtcfp"]
+[ext_resource type="Script" path="res://scripts/environment/Environment.gd" id="2_nqtat"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ydsp5"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -24,7 +24,7 @@ albedo_color = Color(0.686275, 0.537255, 0.282353, 1)
 albedo_color = Color(0.45098, 0.501961, 1, 1)
 
 [node name="environment" instance=ExtResource("1_p7xs0")]
-script = ExtResource("2_vtcfp")
+script = ExtResource("2_nqtat")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." index="0"]
 environment = SubResource("Environment_t0y61")

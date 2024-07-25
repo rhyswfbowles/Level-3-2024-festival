@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-PlayerInventorySingleton="*res://scripts/player_inventory_singleton.gd"
+GlobalItemsList="*res://scripts/items/GlobalItemsList.gd"
 
 [display]
 
