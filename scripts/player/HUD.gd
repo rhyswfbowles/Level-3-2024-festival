@@ -7,15 +7,12 @@ var toolbar: Dictionary = {}
 var Item = preload ("res://scripts/items/Item.gd")
 var Items = preload ("res://scripts/items/Items.gd").new()
 
-func slotIdToName(slotId: int) -> String:
-	return TOOLBAR_SLOTS.keys()[slotId];
-
 func setToolbarActiveItem(slotName: String):
 	if toolbar[slotName] == null:
 		get_node("MarginContainer/CenterContainer/ItemName").text = "";
 		return
 		
-	var item := Items.getItem(toolbar[slotName]);
+	var item = Items.getItem(toolbar[slotName]);
 	if item != null:
 		get_node("MarginContainer/CenterContainer/ItemName").text = item.getName();
 	else:
@@ -26,18 +23,19 @@ func setToolbarActiveItem(slotName: String):
 func setActiveSlot(slotName: String):
 	for slot in toolbar:
 		if slot == slotName:
-			get_node("MarginContainer/HBoxContainer/ToolbarContainer/"+ slot +"/TextureRect").texture = load("res://assets/static/player/hud/HUD_selected_toolbar.png");
+			get_node("MarginContainer/HBoxContainer/ToolbarContainer/"+ slot +"/Background").texture = load("res://assets/static/player/hud/HUD_selected_toolbar.png");
 			setToolbarActiveItem(slotName);
 		else:
-			get_node("MarginContainer/HBoxContainer/ToolbarContainer/"+ slot +"/TextureRect").texture = load("res://assets/static/player/hud/HUD_unselected_toolbar.png");
+			get_node("MarginContainer/HBoxContainer/ToolbarContainer/"+ slot +"/Background").texture = load("res://assets/static/player/hud/HUD_unselected_toolbar.png");
 
 func initToolbar():
-	
 	for key in TOOLBAR_SLOTS.values():
 		toolbar[key] = null;
 
 func addItemToToolbar(toolbarSlot: String, itemId: String):
-	toolbar[toolbarSlot as String] = itemId;
+	var item = Items.getItem(itemId);
+	toolbar[toolbarSlot] = itemId;
+	get_node("MarginContainer/HBoxContainer/ToolbarContainer/"+ toolbarSlot +"/ItemImage").texture = load("res://assets/static/items/waterballoon.png");
 
 func _ready():
 	initToolbar()
