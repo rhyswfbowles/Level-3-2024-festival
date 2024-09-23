@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cv7od1cyo030h"]
+[gd_scene load_steps=7 format=3 uid="uid://cv7od1cyo030h"]
 
-[ext_resource type="Script" path="res://scripts/player/Movement.gd" id="1_pnx02"]
-[ext_resource type="Script" path="res://scripts/player/HUD.gd" id="2_20n2b"]
+[ext_resource type="Script" path="res://src/player/PlayerController.gd" id="1_pnx02"]
+[ext_resource type="Script" path="res://src/player/HUD.gd" id="2_20n2b"]
+[ext_resource type="Script" path="res://src/player/Pickup.gd" id="2_wjxou"]
 [ext_resource type="Texture2D" uid="uid://dtwc45tr0v4d4" path="res://assets/static/player/hud/HUD_unselected_toolbar.png" id="3_17vhq"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hbd7t"]
@@ -14,6 +15,7 @@ script = ExtResource("1_pnx02")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_hbd7t")
+script = ExtResource("2_wjxou")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -32,8 +34,13 @@ anchor_left = 0.5
 anchor_top = 0.9
 anchor_right = 0.5
 anchor_bottom = 0.9
+offset_left = -460.0
+offset_top = -45.0
+offset_right = 180.0
+offset_bottom = 49.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.5, 1.5)
 size_flags_horizontal = 3
 size_flags_vertical = 8
 script = ExtResource("2_20n2b")
@@ -70,7 +77,7 @@ alignment = 1
 
 [node name="ToolbarContainer" type="GridContainer" parent="HUD/MarginContainer/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 6
 columns = 9
 
 [node name="Slot1" type="Panel" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer"]
@@ -88,6 +95,7 @@ stretch_mode = 3
 
 [node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot1"]
 custom_minimum_size = Vector2(60, 60)
+layout_mode = 0
 offset_right = 60.0
 offset_bottom = 60.0
 texture = ExtResource("3_17vhq")
@@ -109,6 +117,7 @@ stretch_mode = 3
 
 [node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot2"]
 custom_minimum_size = Vector2(60, 60)
+layout_mode = 0
 offset_right = 60.0
 offset_bottom = 60.0
 texture = ExtResource("3_17vhq")
@@ -130,6 +139,7 @@ stretch_mode = 3
 
 [node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot3"]
 custom_minimum_size = Vector2(60, 60)
+layout_mode = 0
 offset_right = 60.0
 offset_bottom = 60.0
 texture = ExtResource("3_17vhq")
@@ -151,6 +161,7 @@ stretch_mode = 3
 
 [node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot4"]
 custom_minimum_size = Vector2(60, 60)
+layout_mode = 0
 offset_right = 60.0
 offset_bottom = 60.0
 texture = ExtResource("3_17vhq")
@@ -172,6 +183,7 @@ stretch_mode = 3
 
 [node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot5"]
 custom_minimum_size = Vector2(60, 60)
+layout_mode = 0
 offset_right = 60.0
 offset_bottom = 60.0
 texture = ExtResource("3_17vhq")
@@ -193,6 +205,7 @@ stretch_mode = 3
 
 [node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot6"]
 custom_minimum_size = Vector2(60, 60)
+layout_mode = 0
 offset_right = 60.0
 offset_bottom = 60.0
 texture = ExtResource("3_17vhq")
@@ -214,6 +227,7 @@ stretch_mode = 3
 
 [node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot7"]
 custom_minimum_size = Vector2(60, 60)
+layout_mode = 0
 offset_right = 60.0
 offset_bottom = 60.0
 texture = ExtResource("3_17vhq")
@@ -235,6 +249,7 @@ stretch_mode = 3
 
 [node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot8"]
 custom_minimum_size = Vector2(60, 60)
+layout_mode = 0
 offset_right = 60.0
 offset_bottom = 60.0
 texture = ExtResource("3_17vhq")
@@ -256,6 +271,7 @@ stretch_mode = 3
 
 [node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot9"]
 custom_minimum_size = Vector2(60, 60)
+layout_mode = 0
 offset_right = 60.0
 offset_bottom = 60.0
 texture = ExtResource("3_17vhq")

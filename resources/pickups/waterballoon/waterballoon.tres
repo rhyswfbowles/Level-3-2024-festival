@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://ckcrl8io8dx3s"]
+
+[ext_resource type="Texture2D" uid="uid://6ys8ayx5vdvs" path="res://resources/pickups/waterballoon/waterballoon.png" id="1_3vnus"]
+[ext_resource type="PackedScene" uid="uid://0viph4ay1ec8" path="res://resources/pickups/waterballoon/waterballoon.blend" id="1_h5mk2"]
+[ext_resource type="Script" path="res://src/resourceTypes/Item.gd" id="3_d1qi5"]
+
+[resource]
+script = ExtResource("3_d1qi5")
+name = "Waterballoon"
+model = ExtResource("1_h5mk2")
+image = ExtResource("1_3vnus")

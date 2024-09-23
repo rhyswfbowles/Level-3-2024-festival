@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://6ys8ayx5vdvs"
-path="res://.godot/imported/waterballoon.png-61cc07fbec43564c5aa09ccc5e2d9a00.ctex"
+uid="uid://cxlbd53sgwya1"
+path="res://.godot/imported/bloodballoon.png-ea4bdd80b202881781266327a8cf31e5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/static/items/waterballoon.png"
-dest_files=["res://.godot/imported/waterballoon.png-61cc07fbec43564c5aa09ccc5e2d9a00.ctex"]
+source_file="res://resources/pickups/bloodballoon/bloodballoon.png"
+dest_files=["res://.godot/imported/bloodballoon.png-ea4bdd80b202881781266327a8cf31e5.ctex"]
 
 [params]
 

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://ikqnkh54arsr"]
+
+[ext_resource type="Texture2D" uid="uid://cxlbd53sgwya1" path="res://resources/pickups/bloodballoon/bloodballoon.png" id="1_81x5a"]
+[ext_resource type="Script" path="res://src/resourceTypes/Item.gd" id="1_oi6r8"]
+[ext_resource type="PackedScene" uid="uid://m3qbq13a4c0u" path="res://resources/pickups/bloodballoon/bloodballoon.glb" id="2_vkwp2"]
+
+[resource]
+script = ExtResource("1_oi6r8")
+name = "Bloodballoon"
+model = ExtResource("2_vkwp2")
+image = ExtResource("1_81x5a")

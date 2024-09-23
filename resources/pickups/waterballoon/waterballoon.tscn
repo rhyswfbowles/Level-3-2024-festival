@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://b4o5mphs3jn4p"]
+
+[ext_resource type="Script" path="res://src/items/Pickup.gd" id="1_mmdfh"]
+[ext_resource type="Resource" uid="uid://ckcrl8io8dx3s" path="res://resources/pickups/waterballoon/waterballoon.tres" id="2_1yb1h"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_j34c5"]
+
+[node name="Waterballoon" type="Node3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 1.56627, 0.67731, 0.841385)
+script = ExtResource("1_mmdfh")
+item = ExtResource("2_1yb1h")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1.3, 0, 0, 0, 1.3, 0, 0, 0, 1.3, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0)
+shape = SubResource("SphereShape3D_j34c5")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

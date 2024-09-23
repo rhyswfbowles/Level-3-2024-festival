@@ -1,48 +1,59 @@
+class_name Inventory
 extends Control
 
-const TOOLBAR_SLOTS = {Slot1 = "Slot1", Slot2 = "Slot2", Slot3 = "Slot3", Slot4 = "Slot4", Slot5 = "Slot5", Slot6 = "Slot6", Slot7 = "Slot7", Slot8 = "Slot8", Slot9 = "Slot9"}
+const TOOLBAR_SLOTS = { Slot1 = "Slot1", Slot2 = "Slot2", Slot3 = "Slot3", Slot4 = "Slot4", Slot5 = "Slot5", Slot6 = "Slot6", Slot7 = "Slot7", Slot8 = "Slot8", Slot9 = "Slot9"}
 
 var toolbar: Dictionary = {}
-
-var Item = preload ("res://scripts/items/Item.gd")
-var Items = preload ("res://scripts/items/Items.gd").new()
-
-func setToolbarActiveItem(slotName: String):
-	if toolbar[slotName] == null:
-		get_node("MarginContainer/CenterContainer/ItemName").text = "";
-		return
-		
-	var item = Items.getItem(toolbar[slotName]);
-	if item != null:
-		get_node("MarginContainer/CenterContainer/ItemName").text = item.getName();
-	else:
-		get_node("MarginContainer/CenterContainer/ItemName").text = "";
-
-	
+var activeSlot = null
+var isDropping = false
+@onready var player = $".."
 
 func setActiveSlot(slotName: String):
+	activeSlot = slotName
 	for slot in toolbar:
 		if slot == slotName:
 			get_node("MarginContainer/HBoxContainer/ToolbarContainer/"+ slot +"/Background").texture = load("res://assets/static/player/hud/HUD_selected_toolbar.png");
-			setToolbarActiveItem(slotName);
+			if toolbar[slot] != null:
+				print(toolbar[slot])
+				get_node("MarginContainer/CenterContainer/ItemName").text = toolbar[slot].name;
+			else:
+				get_node("MarginContainer/CenterContainer/ItemName").text = "";
 		else:
 			get_node("MarginContainer/HBoxContainer/ToolbarContainer/"+ slot +"/Background").texture = load("res://assets/static/player/hud/HUD_unselected_toolbar.png");
+
+func addItemToToolbar(item: Item):
+	var currentSlot = activeSlot
+	toolbar[currentSlot] = item;
+	get_node("MarginContainer/HBoxContainer/ToolbarContainer/"+ currentSlot +"/ItemImage").texture = load(item.image.resource_path);
+	setActiveSlot(currentSlot)
+
+func dropItemFromToolbar(item: Item):
+	var currentSlot = activeSlot
+	if toolbar[currentSlot] == null:
+		return
+		
+	isDropping = true
+	toolbar[currentSlot] = null;
+	get_node("MarginContainer/HBoxContainer/ToolbarContainer/"+ currentSlot +"/ItemImage").texture = null;
+	var instance = item.model.instantiate()
+	instance.position = player.position
+	player.add_sibling(instance)
+	isDropping = false
 
 func initToolbar():
 	for key in TOOLBAR_SLOTS.values():
 		toolbar[key] = null;
 
-func addItemToToolbar(toolbarSlot: String, itemId: String):
-	var item = Items.getItem(itemId);
-	toolbar[toolbarSlot] = itemId;
-	get_node("MarginContainer/HBoxContainer/ToolbarContainer/"+ toolbarSlot +"/ItemImage").texture = load("res://assets/static/items/waterballoon.png");
-
 func _ready():
 	initToolbar()
-	addItemToToolbar(TOOLBAR_SLOTS.Slot1, ItemsList.WATERBALLOON);
 	setActiveSlot(TOOLBAR_SLOTS.Slot1);
 
 func _process(_delta):
+	if activeSlot == null:
+		activeSlot = TOOLBAR_SLOTS.Slot1
+	if Input.is_action_pressed("drop_item"):
+		dropItemFromToolbar(toolbar[activeSlot])
+		
 	if Input.is_action_pressed("SelectInventorySlot1"):
 		setActiveSlot(TOOLBAR_SLOTS.Slot1);
 	elif Input.is_action_pressed("SelectInventorySlot2"):
