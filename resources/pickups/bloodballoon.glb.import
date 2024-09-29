@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://m3qbq13a4c0u"
-path="res://.godot/imported/bloodballoon.glb-3f942561b13c908d16bd990a828b8d19.scn"
+uid="uid://bw2oemciy3oma"
+path="res://.godot/imported/bloodballoon.glb-0fbcac75f8cf4fcd63eaa3a35646ac9c.scn"
 
 [deps]
 
-source_file="res://resources/pickups/bloodballoon/bloodballoon.glb"
-dest_files=["res://.godot/imported/bloodballoon.glb-3f942561b13c908d16bd990a828b8d19.scn"]
+source_file="res://resources/pickups/bloodballoon.glb"
+dest_files=["res://.godot/imported/bloodballoon.glb-0fbcac75f8cf4fcd63eaa3a35646ac9c.scn"]
 
 [params]
 

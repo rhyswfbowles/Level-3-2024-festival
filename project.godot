@@ -11,20 +11,26 @@ config_version=5
 [application]
 
 config/name="2024 Festival"
-run/main_scene="res://resources/environment/environment.tscn"
+run/main_scene="res://resources/environment/world.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=1920
-window/size/viewport_height=1080
-window/size/mode=2
+window/size/viewport_width=1200
+window/size/viewport_height=600
 window/size/initial_position_type=3
 window/size/initial_position=Vector2i(512, 512)
 window/size/always_on_top=true
 window/energy_saving/keep_screen_on.editor=true
 window/size/always_on_top.editor=false
+
+[file_customization]
+
+folder_colors={
+"res://resources/": "green",
+"res://src/": "red"
+}
 
 [input]
 
@@ -110,6 +116,11 @@ SelectInventorySlot8={
 SelectInventorySlot9={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":57,"key_label":0,"unicode":57,"location":0,"echo":false,"script":null)
+]
+}
+SelectInventorySlot10={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":48,"key_label":0,"unicode":48,"location":0,"echo":false,"script":null)
 ]
 }
 drop_item={

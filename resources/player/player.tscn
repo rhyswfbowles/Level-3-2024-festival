@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://cv7od1cyo030h"]
+[gd_scene load_steps=8 format=3 uid="uid://cv7od1cyo030h"]
 
 [ext_resource type="Script" path="res://src/player/PlayerController.gd" id="1_pnx02"]
-[ext_resource type="Script" path="res://src/player/HUD.gd" id="2_20n2b"]
 [ext_resource type="Script" path="res://src/player/Pickup.gd" id="2_wjxou"]
 [ext_resource type="Texture2D" uid="uid://dtwc45tr0v4d4" path="res://assets/static/player/hud/HUD_unselected_toolbar.png" id="3_17vhq"]
+[ext_resource type="Script" path="res://src/player/HUDManager.gd" id="3_swvg0"]
+[ext_resource type="Script" path="res://src/player/InventoryManager.gd" id="4_g8g2s"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hbd7t"]
 
@@ -28,252 +29,340 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.49983, 0)
 [node name="Camera3D" type="Camera3D" parent="Neck"]
 
 [node name="HUD" type="Control" parent="."]
+clip_contents = true
 custom_minimum_size = Vector2(640, 90)
 layout_mode = 3
+anchors_preset = 7
 anchor_left = 0.5
-anchor_top = 0.9
+anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 0.9
-offset_left = -460.0
-offset_top = -45.0
-offset_right = 180.0
-offset_bottom = 49.0
+anchor_bottom = 1.0
+offset_left = -600.0
+offset_top = -600.0
+offset_right = 200.0
+offset_bottom = -200.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 scale = Vector2(1.5, 1.5)
-size_flags_horizontal = 3
-size_flags_vertical = 8
-script = ExtResource("2_20n2b")
+size_flags_horizontal = 6
+size_flags_vertical = 10
+mouse_filter = 1
+script = ExtResource("3_swvg0")
 
 [node name="MarginContainer" type="MarginContainer" parent="HUD"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_top = -95.0
+offset_right = 320.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 15
+
+[node name="ToolbarContainer" type="VSplitContainer" parent="HUD/MarginContainer"]
+layout_mode = 2
+script = ExtResource("4_g8g2s")
+
+[node name="ItemName" type="Label" parent="HUD/MarginContainer/ToolbarContainer"]
+layout_mode = 2
+text = "Item Name"
+horizontal_alignment = 1
+
+[node name="Toolbar" type="GridContainer" parent="HUD/MarginContainer/ToolbarContainer"]
+custom_minimum_size = Vector2(640, 60)
+layout_mode = 2
+columns = 10
+
+[node name="0" type="Panel" parent="HUD/MarginContainer/ToolbarContainer/Toolbar"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Background" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/0"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -66.0
-offset_right = 66.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 100
-theme_override_constants/margin_right = 100
+texture = ExtResource("3_17vhq")
+expand_mode = 2
+stretch_mode = 3
 
-[node name="CenterContainer" type="CenterContainer" parent="HUD/MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 0
+[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/0"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_17vhq")
+expand_mode = 2
+stretch_mode = 3
 
-[node name="ItemName" type="RichTextLabel" parent="HUD/MarginContainer/CenterContainer"]
-clip_contents = false
-layout_mode = 2
-size_flags_vertical = 0
-text = "Item Name"
-fit_content = true
-scroll_active = false
-autowrap_mode = 0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="HUD/MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 8
-alignment = 1
-
-[node name="ToolbarContainer" type="GridContainer" parent="HUD/MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-columns = 9
-
-[node name="Slot1" type="Panel" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer"]
+[node name="1" type="Panel" parent="HUD/MarginContainer/ToolbarContainer/Toolbar"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
+size_flags_vertical = 4
 
-[node name="Background" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot1"]
+[node name="Background" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/1"]
 custom_minimum_size = Vector2(60, 60)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot1"]
+[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/1"]
 custom_minimum_size = Vector2(60, 60)
-layout_mode = 0
-offset_right = 60.0
-offset_bottom = 60.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="Slot2" type="Panel" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer"]
+[node name="2" type="Panel" parent="HUD/MarginContainer/ToolbarContainer/Toolbar"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
+size_flags_vertical = 4
 
-[node name="Background" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot2"]
+[node name="Background" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/2"]
 custom_minimum_size = Vector2(60, 60)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot2"]
+[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/2"]
 custom_minimum_size = Vector2(60, 60)
-layout_mode = 0
-offset_right = 60.0
-offset_bottom = 60.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="Slot3" type="Panel" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer"]
+[node name="3" type="Panel" parent="HUD/MarginContainer/ToolbarContainer/Toolbar"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
+size_flags_vertical = 4
 
-[node name="Background" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot3"]
+[node name="Background" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/3"]
 custom_minimum_size = Vector2(60, 60)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot3"]
+[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/3"]
 custom_minimum_size = Vector2(60, 60)
-layout_mode = 0
-offset_right = 60.0
-offset_bottom = 60.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="Slot4" type="Panel" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer"]
+[node name="4" type="Panel" parent="HUD/MarginContainer/ToolbarContainer/Toolbar"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
+size_flags_vertical = 4
 
-[node name="Background" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot4"]
+[node name="Background" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/4"]
 custom_minimum_size = Vector2(60, 60)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot4"]
+[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/4"]
 custom_minimum_size = Vector2(60, 60)
-layout_mode = 0
-offset_right = 60.0
-offset_bottom = 60.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="Slot5" type="Panel" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer"]
+[node name="5" type="Panel" parent="HUD/MarginContainer/ToolbarContainer/Toolbar"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
+size_flags_vertical = 4
 
-[node name="Background" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot5"]
+[node name="Background" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/5"]
 custom_minimum_size = Vector2(60, 60)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot5"]
+[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/5"]
 custom_minimum_size = Vector2(60, 60)
-layout_mode = 0
-offset_right = 60.0
-offset_bottom = 60.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="Slot6" type="Panel" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer"]
+[node name="6" type="Panel" parent="HUD/MarginContainer/ToolbarContainer/Toolbar"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
+size_flags_vertical = 4
 
-[node name="Background" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot6"]
+[node name="Background" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/6"]
 custom_minimum_size = Vector2(60, 60)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot6"]
+[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/6"]
 custom_minimum_size = Vector2(60, 60)
-layout_mode = 0
-offset_right = 60.0
-offset_bottom = 60.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="Slot7" type="Panel" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer"]
+[node name="7" type="Panel" parent="HUD/MarginContainer/ToolbarContainer/Toolbar"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
+size_flags_vertical = 4
 
-[node name="Background" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot7"]
+[node name="Background" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/7"]
 custom_minimum_size = Vector2(60, 60)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot7"]
+[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/7"]
 custom_minimum_size = Vector2(60, 60)
-layout_mode = 0
-offset_right = 60.0
-offset_bottom = 60.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="Slot8" type="Panel" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer"]
+[node name="8" type="Panel" parent="HUD/MarginContainer/ToolbarContainer/Toolbar"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
+size_flags_vertical = 4
 
-[node name="Background" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot8"]
+[node name="Background" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/8"]
 custom_minimum_size = Vector2(60, 60)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot8"]
+[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/8"]
 custom_minimum_size = Vector2(60, 60)
-layout_mode = 0
-offset_right = 60.0
-offset_bottom = 60.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="Slot9" type="Panel" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer"]
+[node name="9" type="Panel" parent="HUD/MarginContainer/ToolbarContainer/Toolbar"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
+size_flags_vertical = 4
 
-[node name="Background" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot9"]
+[node name="Background" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/9"]
 custom_minimum_size = Vector2(60, 60)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/ToolbarContainer/Slot9"]
+[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/9"]
 custom_minimum_size = Vector2(60, 60)
-layout_mode = 0
-offset_right = 60.0
-offset_bottom = 60.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3

@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://0er46ckaccmg"
-path="res://.godot/imported/waterballoon.blend-076a9bd7856bdc94ef0289594650e1d1.scn"
+uid="uid://d2cxi0po43q8r"
+path="res://.godot/imported/bloodballoon.blend-a5e61e05e012998492aea290e16c6018.scn"
 
 [deps]
 
-source_file="res://resources/pickups/waterballoon/waterballoon.blend"
-dest_files=["res://.godot/imported/waterballoon.blend-076a9bd7856bdc94ef0289594650e1d1.scn"]
+source_file="res://resources/pickups/bloodballoon/bloodballoon.blend"
+dest_files=["res://.godot/imported/bloodballoon.blend-a5e61e05e012998492aea290e16c6018.scn"]
 
 [params]
 
