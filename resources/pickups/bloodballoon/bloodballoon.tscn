@@ -1,29 +1,49 @@
-[gd_scene load_steps=5 format=3 uid="uid://dogiqkil0vvf5"]
+[gd_scene load_steps=8 format=3 uid="uid://dogiqkil0vvf5"]
 
-[ext_resource type="Script" path="res://src/items/PickupItemActions.gd" id="1_io0y5"]
+[ext_resource type="PackedScene" uid="uid://d3bmyibgyguaq" path="res://resources/pickups/Pickup.tscn" id="2_ficwc"]
 [ext_resource type="PackedScene" uid="uid://d2cxi0po43q8r" path="res://resources/pickups/bloodballoon/bloodballoon.blend" id="2_h05h6"]
+[ext_resource type="Texture2D" uid="uid://cxlbd53sgwya1" path="res://resources/pickups/bloodballoon/bloodballoon.png" id="2_mssfp"]
+[ext_resource type="Script" path="res://src/resourceTypes/PickupData.gd" id="3_q4um2"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_h5vmo"]
+[sub_resource type="Resource" id="Resource_o7ito"]
+script = ExtResource("3_q4um2")
+name = "Bloodballoon"
+weight = 0.005
+cost = 5.0
+description = "Is...Is that blood?!?"
+image = ExtResource("2_mssfp")
+can_pickup = true
+max_stack_size = 1
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_n0i2a"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_7i5pt"]
 
 [node name="Bloodballoon" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-script = ExtResource("1_io0y5")
 
-[node name="bloodballoon" parent="." instance=ExtResource("2_h05h6")]
+[node name="Pickup" parent="." instance=ExtResource("2_ficwc")]
+data = SubResource("Resource_o7ito")
 
-[node name="RigidBody3D" type="RigidBody3D" parent="."]
+[node name="RigidBody3D" type="RigidBody3D" parent="Pickup"]
+disable_mode = 2
+collision_layer = 2
 mass = 0.005
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
-shape = SubResource("SphereShape3D_h5vmo")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pickup/RigidBody3D"]
+shape = SubResource("SphereShape3D_n0i2a")
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="bloodballoon" parent="Pickup/RigidBody3D" instance=ExtResource("2_h05h6")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+[node name="Area3D" type="Area3D" parent="Pickup/RigidBody3D/bloodballoon"]
+collision_layer = 8
+collision_mask = 3
+input_capture_on_drag = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pickup/RigidBody3D/bloodballoon/Area3D"]
 shape = SubResource("SphereShape3D_7i5pt")
 
-[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="Pickup/RigidBody3D/bloodballoon/Area3D" to="Pickup" method="_on_area_3d_body_entered"]
+
+[editable path="Pickup/RigidBody3D/bloodballoon"]

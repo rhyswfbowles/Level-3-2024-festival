@@ -1,30 +1,49 @@
-[gd_scene load_steps=5 format=3 uid="uid://cl04rxvt25364"]
+[gd_scene load_steps=7 format=3 uid="uid://ygorg3gi8w0x"]
 
-[ext_resource type="Script" path="res://src/items/PickupItemActions.gd" id="1_kuggm"]
+[ext_resource type="Script" path="res://src/resourceTypes/PickupData.gd" id="2_j5w3t"]
 [ext_resource type="PackedScene" uid="uid://0er46ckaccmg" path="res://resources/pickups/waterballoon/waterballoon.blend" id="2_o0wlp"]
+[ext_resource type="Texture2D" uid="uid://6ys8ayx5vdvs" path="res://resources/pickups/waterballoon/waterballoon.png" id="2_sklla"]
+[ext_resource type="PackedScene" uid="uid://d3bmyibgyguaq" path="res://resources/pickups/Pickup.tscn" id="3_10gec"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_8un8y"]
-bounce = 0.01
-absorbent = true
+[sub_resource type="Resource" id="Resource_mqxiw"]
+script = ExtResource("2_j5w3t")
+name = "Waterballoon"
+weight = 0.005
+cost = 3.0
+description = "Splishy Splashy"
+image = ExtResource("2_sklla")
+can_pickup = true
+max_stack_size = 1
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_1657x"]
 
 [node name="Waterballoon" type="Node3D"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 1, 0)
-script = ExtResource("1_kuggm")
 
-[node name="waterballoon" parent="." instance=ExtResource("2_o0wlp")]
+[node name="Pickup" parent="." instance=ExtResource("3_10gec")]
+data = SubResource("Resource_mqxiw")
 
-[node name="RigidBody3D" type="RigidBody3D" parent="."]
+[node name="RigidBody3D" type="RigidBody3D" parent="Pickup"]
+disable_mode = 2
+collision_layer = 2
 mass = 0.005
-physics_material_override = SubResource("PhysicsMaterial_8un8y")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+[node name="waterballoon" parent="Pickup/RigidBody3D" instance=ExtResource("2_o0wlp")]
+
+[node name="Sphere_001" parent="Pickup/RigidBody3D/waterballoon" index="0"]
+transform = Transform3D(0.5, 0, 0, 0, -2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 0, 0)
+
+[node name="Area3D" type="Area3D" parent="Pickup/RigidBody3D/waterballoon"]
+disable_mode = 2
+collision_layer = 8
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pickup/RigidBody3D/waterballoon/Area3D"]
 shape = SubResource("SphereShape3D_1657x")
 
-[node name="Area3D" type="Area3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pickup/RigidBody3D"]
 shape = SubResource("SphereShape3D_1657x")
 
-[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="Pickup/RigidBody3D/waterballoon/Area3D" to="Pickup" method="_on_area_3d_body_entered"]
+
+[editable path="Pickup/RigidBody3D/waterballoon"]
