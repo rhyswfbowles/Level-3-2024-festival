@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/resourceTypes/PickupData.gd" id="2_j5w3t"]
 [ext_resource type="PackedScene" uid="uid://0er46ckaccmg" path="res://resources/pickups/waterballoon/waterballoon.blend" id="2_o0wlp"]
-[ext_resource type="Texture2D" uid="uid://6ys8ayx5vdvs" path="res://resources/pickups/waterballoon/waterballoon.png" id="2_sklla"]
+[ext_resource type="Texture2D" uid="uid://c2xe4j0wknc74" path="res://resources/pickups/waterballoon/waterballoon.png" id="2_sklla"]
 [ext_resource type="PackedScene" uid="uid://d3bmyibgyguaq" path="res://resources/pickups/Pickup.tscn" id="3_10gec"]
 
 [sub_resource type="Resource" id="Resource_mqxiw"]
@@ -12,8 +12,8 @@ weight = 0.005
 cost = 3.0
 description = "Splishy Splashy"
 image = ExtResource("2_sklla")
-can_pickup = true
-max_stack_size = 1
+canPickup = true
+maxStackSize = 1
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_1657x"]
 

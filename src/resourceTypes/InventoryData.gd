@@ -3,9 +3,9 @@ class_name InventoryData
 
 @export var slots: Array[SlotData]
 
-func add_item(selectedSlot: int, item: PickupData):
-	if not has_item(selectedSlot):
-		var slot = SlotData.new()
+func addItemToSlot(selectedSlot: int, item: PickupData):
+	if not hasItemInSlot(selectedSlot):
+		var slot: SlotData = SlotData.new()
 		slot.item = item
 		slot.quantity = 1
 		slots[selectedSlot] = slot
@@ -13,13 +13,16 @@ func add_item(selectedSlot: int, item: PickupData):
 	
 	slots[selectedSlot].quantity += 1
 
-func remove_item(selectedSlot: int):
+func removeItemFromSlot(selectedSlot: int):
 	slots[selectedSlot].quantity -= 1
 	if slots[selectedSlot].quantity <= 0:
-		slots[selectedSlot].item = null
+		slots[selectedSlot] = null
 
-func get_item(selectedSlot: int) -> PickupData:
-	return slots[selectedSlot].item
+func getItemInSlot(selectedSlot: int):
+	if slots[selectedSlot] != null && slots[selectedSlot].item != null:
+		return slots[selectedSlot].item as PickupData
+	else:
+		return null
 
-func has_item(selectedSlot: int) -> bool:
+func hasItemInSlot(selectedSlot: int) -> bool:
 	return slots[selectedSlot] != null

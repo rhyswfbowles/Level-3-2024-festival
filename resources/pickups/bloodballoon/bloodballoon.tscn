@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://d3bmyibgyguaq" path="res://resources/pickups/Pickup.tscn" id="2_ficwc"]
 [ext_resource type="PackedScene" uid="uid://d2cxi0po43q8r" path="res://resources/pickups/bloodballoon/bloodballoon.blend" id="2_h05h6"]
-[ext_resource type="Texture2D" uid="uid://cxlbd53sgwya1" path="res://resources/pickups/bloodballoon/bloodballoon.png" id="2_mssfp"]
+[ext_resource type="Texture2D" uid="uid://t1omkrve33ce" path="res://resources/pickups/bloodballoon/bloodballoon.png" id="2_mssfp"]
 [ext_resource type="Script" path="res://src/resourceTypes/PickupData.gd" id="3_q4um2"]
 
 [sub_resource type="Resource" id="Resource_o7ito"]
@@ -12,8 +12,8 @@ weight = 0.005
 cost = 5.0
 description = "Is...Is that blood?!?"
 image = ExtResource("2_mssfp")
-can_pickup = true
-max_stack_size = 1
+canPickup = true
+maxStackSize = 1
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_n0i2a"]
 

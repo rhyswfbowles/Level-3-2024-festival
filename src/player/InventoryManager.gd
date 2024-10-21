@@ -1,93 +1,114 @@
 class_name InventoryManager
 extends Control
 
-var activeInventorySlot = 0
+var actions: Actions = Actions.new()
 
-@onready var inventory = load("res://resources/player/player_inventory.tres")
-@onready var world = get_tree().root.get_child(0)
-@onready var player = world.get_node("Player")
+#region Signals
 
-@onready var toolbarItems = get_node("Toolbar").get_children()
-@onready var toolbarItemName = get_node("ItemName")
+signal sItemAdded(slot_index: int, item: PickupData)
+signal sItemRemoved(slot_index: int)
+signal sAddItemToInventory(item: PickupData)
+
+func sfOnItemAdded(slot_index: int, item: PickupData) -> void:
+	toolbarItems[slot_index].get_node("ItemImage").texture = load(item.image.resource_path)
+	toolbarItemName.text = item.name
+
+func sfOnItemRemoved(slot_index: int) -> void:
+	toolbarItems[slot_index].get_node("ItemImage").texture = null
+	toolbarItemName.text = ""
+	inventory.removeItemFromSlot(slot_index)
+
+func sfOnAddItemToInventory(item: PickupData) -> void:
+	addItemToInventory(item)
+
+#endregion Signals
+
+var activeInventorySlot: int = 0
+
+@onready var inventory: Resource = load("res://resources/player/player_inventory.tres")
+@onready var selectedSlotStyle: StyleBoxFlat = preload("res://resources/player/HUD/inventory_slot_selected.tres")
+@onready var unselectedSlotStyle: StyleBoxFlat = preload("res://resources/player/HUD/inventory_slot_unselected.tres")
+
+@onready var toolbarItems: Array[Node] = get_node("Toolbar").get_children()
+@onready var toolbarItemName: Label = get_node("ItemName")
+
+func _ready() -> void:
+	setActiveInventorySlot(0)
+	sItemAdded.connect(sfOnItemAdded)
+	sItemRemoved.connect(sfOnItemRemoved)
+	sAddItemToInventory.connect(sfOnAddItemToInventory)
+
+func _process(delta) -> void:
+	for i in range(10):
+		if Input.is_action_pressed("SelectInventorySlot" + str(i + 1)):
+			setActiveInventorySlot(i)
+			
+	if Input.is_action_pressed("primary_fire"):
+		if doesCurrentSlotHaveItem():
+			actions.increaseThrowPower(delta)
+
+	if Input.is_action_just_released("primary_fire"):
+		removeItemFromInventory()
+	
+
+func _input(_event: InputEvent) -> void:
+	if Input.is_action_pressed("scroll_inventory_positive"):
+		setActiveInventorySlot(activeInventorySlot + 1)
+
+	if Input.is_action_pressed("scroll_inventory_negative"):
+		setActiveInventorySlot(activeInventorySlot - 1)
+
+#region Functions
+func doesCurrentSlotHaveItem() -> bool:
+	return inventory.hasItemInSlot(activeInventorySlot)
 
 func findNextEmptySlot() -> int:
 	for slot in toolbarItems:
-		var slotIndex = slot.get_name().to_int()
-		if not inventory.has_item(slotIndex):
+		var slotIndex: int = slot.get_name().to_int()
+		if not inventory.hasItemInSlot(slotIndex):
 			return slotIndex
 	return -1
 
 func setActiveInventorySlot(slotIndex: int) -> void:
-	activeInventorySlot = slotIndex
-	for slot in toolbarItems:
-		if slot.get_name() == str(slotIndex):
-			if inventory.has_item(slotIndex):
-				slot.get_node("ItemImage").texture = load(inventory.get_item(slotIndex).image.resource_path);
-				toolbarItemName.text = inventory.slots[slotIndex].item.name;
-			else:
-				slot.get_node("Background").texture = load("res://assets/static/player/hud/HUD_selected_toolbar.png");
-				toolbarItemName.text = "";
-		else:
-			slot.get_node("Background").texture = load("res://assets/static/player/hud/HUD_unselected_toolbar.png");
+	if slotIndex < 0:
+		slotIndex = 0
+	elif slotIndex > 9:
+		slotIndex = 9
 
+	activeInventorySlot = slotIndex
+	for slot: Panel in toolbarItems:
+		if slot.get_name() == str(slotIndex):
+			slot.add_theme_stylebox_override("panel", selectedSlotStyle)
+			if inventory.hasItemInSlot(slotIndex):
+				slot.get_node("ItemImage").texture = load(inventory.getItemInSlot(slotIndex).image.resource_path)
+				toolbarItemName.text = inventory.slots[slotIndex].item.name
+			else:
+				toolbarItemName.text = ""
+		else:
+			slot.add_theme_stylebox_override("panel", unselectedSlotStyle)
 
 func addItemToInventory(item: PickupData) -> void:
-	var targetSlot = activeInventorySlot
-	if(inventory.has_item(targetSlot)):
+	var targetSlot: int = activeInventorySlot
+	if inventory.hasItemInSlot(targetSlot):
 		targetSlot = findNextEmptySlot()
-		
-	inventory.add_item(targetSlot, item);
-	toolbarItems[targetSlot].get_node("ItemImage").texture = load(inventory.get_item(targetSlot).image.resource_path);
-	toolbarItemName.text = inventory.slots[targetSlot].item.name;
 
+	inventory.addItemToSlot(targetSlot, item)
+	sItemAdded.emit(targetSlot, item)
 
 func removeItemFromInventory() -> void:
-	var currentSlot = activeInventorySlot
-
-	if !inventory.has_item(currentSlot):
-		return
-
-	var item = inventory.get_item(currentSlot);
-
-	if item == null:
-		return
-
-	var instance = PickupItemsIndex.get_pickup_scene(item.name).instantiate()
-	print("Instance: %s" % instance)
-	print(player)
-	instance.global_transform.origin = player.position
-	instance.get_node("RigidBody3D").apply_impulse(-player.camera.get_global_transform().basis.z * 20)
-	player.add_sibling(instance)
+	var currentSlot: int = activeInventorySlot
+	var item: PickupData = inventory.getItemInSlot(currentSlot)
 	
-	inventory.remove_item(currentSlot)
-	toolbarItems[currentSlot].get_node("ItemImage").texture = null;
-	toolbarItemName.text = "";
+	if item == null:
+		actions.resetThrowPower()
+		return
 
+	var pickup_scene: PackedScene = PickupItemsIndex.getPickupScene(item.name)
+	if pickup_scene == null:
+		push_error("Pickup scene not found for item: %s" % item.name)
+		return
 
-func _ready() -> void:
-	setActiveInventorySlot(0);
+	actions.throwItem(pickup_scene)
+	sItemRemoved.emit(currentSlot)
 
-func _process(_delta) -> void:
-	if Input.is_action_pressed("drop_item"):
-		removeItemFromInventory()
-
-	if Input.is_action_pressed("SelectInventorySlot1"):
-		setActiveInventorySlot(0);
-	elif Input.is_action_pressed("SelectInventorySlot2"):
-		setActiveInventorySlot(1);
-	elif Input.is_action_pressed("SelectInventorySlot3"):
-		setActiveInventorySlot(2);
-	elif Input.is_action_pressed("SelectInventorySlot4"):
-		setActiveInventorySlot(3);
-	elif Input.is_action_pressed("SelectInventorySlot5"):
-		setActiveInventorySlot(4);
-	elif Input.is_action_pressed("SelectInventorySlot6"):
-		setActiveInventorySlot(5);
-	elif Input.is_action_pressed("SelectInventorySlot7"):
-		setActiveInventorySlot(6);
-	elif Input.is_action_pressed("SelectInventorySlot8"):
-		setActiveInventorySlot(7);
-	elif Input.is_action_pressed("SelectInventorySlot9"):
-		setActiveInventorySlot(8);
-	elif Input.is_action_pressed("SelectInventorySlot10"):
-		setActiveInventorySlot(9);
+#endregion Functions

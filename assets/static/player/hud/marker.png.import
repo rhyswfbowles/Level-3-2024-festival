@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://juv2synm8jib"
-path="res://.godot/imported/HUD_selected_toolbar.png-7fe9ff9fed2d7e3302f0605459a80146.ctex"
+uid="uid://b1h05esh6dlur"
+path="res://.godot/imported/marker.png-0e3eb40fcf4dc997275dd4f31c7e7578.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/static/player/hud/HUD_selected_toolbar.png"
-dest_files=["res://.godot/imported/HUD_selected_toolbar.png-7fe9ff9fed2d7e3302f0605459a80146.ctex"]
+source_file="res://assets/static/player/hud/marker.png"
+dest_files=["res://.godot/imported/marker.png-0e3eb40fcf4dc997275dd4f31c7e7578.ctex"]
 
 [params]
 

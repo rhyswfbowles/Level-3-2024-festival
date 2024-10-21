@@ -1,10 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://d20sbepav5vwe"]
+[gd_scene load_steps=14 format=3 uid="uid://d20sbepav5vwe"]
 
 [ext_resource type="PackedScene" uid="uid://w4sr8i5y61ec" path="res://resources/environment/environment.blend" id="1_oqlx2"]
 [ext_resource type="Script" path="res://src/environment/Environment.gd" id="2_ngj87"]
 [ext_resource type="PackedScene" uid="uid://cv7od1cyo030h" path="res://resources/player/player.tscn" id="3_ofo8j"]
+[ext_resource type="PackedScene" uid="uid://b3w1se7gr5bu7" path="res://resources/pickups/Spawner.tscn" id="4_1ftxn"]
 [ext_resource type="PackedScene" uid="uid://ygorg3gi8w0x" path="res://resources/pickups/waterballoon/waterballoon.tscn" id="5_vcnng"]
 [ext_resource type="PackedScene" uid="uid://dogiqkil0vvf5" path="res://resources/pickups/bloodballoon/bloodballoon.tscn" id="5_yvk1n"]
+[ext_resource type="Script" path="res://src/resourceTypes/SpawnerData.gd" id="6_1gqni"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ydsp5"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -24,6 +26,12 @@ albedo_color = Color(0.686275, 0.537255, 0.282353, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1eehh"]
 albedo_color = Color(0.45098, 0.501961, 1, 1)
+
+[sub_resource type="Resource" id="Resource_f13ft"]
+script = ExtResource("6_1gqni")
+itemsToSpawn = Array[PackedScene]([ExtResource("5_yvk1n"), ExtResource("5_vcnng")])
+spawnCooldown = 10.0
+spawnAmount = 1
 
 [node name="world" instance=ExtResource("1_oqlx2")]
 script = ExtResource("2_ngj87")
@@ -45,16 +53,20 @@ disable_mode = 1
 collision_mask = 0
 
 [node name="Player" parent="." index="3" instance=ExtResource("3_ofo8j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.70002, 1.34353)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7, 0)
 
-[node name="Bloodballoon" parent="." index="4" instance=ExtResource("5_yvk1n")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.97882, 1, 1.3642)
+[node name="MultiSpawner" parent="." index="4" instance=ExtResource("4_1ftxn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.05778, 0.0729309, -0.00570321)
+data = SubResource("Resource_f13ft")
 
-[node name="Waterballoon" parent="." index="5" instance=ExtResource("5_vcnng")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.422391, 0.999998, 6.87057)
+[node name="MultiSpawner3" parent="." index="5" instance=ExtResource("4_1ftxn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.93993, 0.0729309, -0.00570321)
+data = SubResource("Resource_f13ft")
 
-[node name="Waterballoon2" parent="." index="6" instance=ExtResource("5_vcnng")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -16.1199, 2.22398, -1.136)
+[node name="MultiSpawner2" parent="." index="6" instance=ExtResource("4_1ftxn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00647557, 0.0729309, 7.96278)
+data = SubResource("Resource_f13ft")
 
-[node name="Bloodballoon2" parent="." index="7" instance=ExtResource("5_yvk1n")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.95719, 2.44554, -17.2277)
+[node name="MultiSpawner4" parent="." index="7" instance=ExtResource("4_1ftxn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00647557, 0.0729309, -7.95024)
+data = SubResource("Resource_f13ft")

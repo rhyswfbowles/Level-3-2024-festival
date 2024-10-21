@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://b3w1se7gr5bu7"]
+
+[ext_resource type="Script" path="res://resources/pickups/Spawner.gd" id="1_v7kmx"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5q5ms"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7jsx4"]
+albedo_color = Color(0.454902, 0.156863, 0.529412, 1)
+emission_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ea8j3"]
+
+[node name="Spawner" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+script = ExtResource("1_v7kmx")
+
+[node name="Panel" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_5q5ms")
+surface_material_override/0 = SubResource("StandardMaterial3D_7jsx4")
+
+[node name="Trigger" type="Area3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.5, 0)
+collision_layer = 8
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Trigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_ea8j3")
+
+[connection signal="area_entered" from="Trigger" to="." method="_on_trigger_area_entered"]
+[connection signal="body_entered" from="Trigger" to="." method="_on_trigger_body_entered"]
+[connection signal="body_shape_entered" from="Trigger" to="." method="_on_trigger_body_shape_entered"]

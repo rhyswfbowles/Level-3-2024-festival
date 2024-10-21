@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://cv7od1cyo030h"]
+[gd_scene load_steps=9 format=3 uid="uid://cv7od1cyo030h"]
 
 [ext_resource type="Script" path="res://src/player/PlayerController.gd" id="1_pnx02"]
 [ext_resource type="Script" path="res://src/player/Pickup.gd" id="2_wjxou"]
-[ext_resource type="Texture2D" uid="uid://dtwc45tr0v4d4" path="res://assets/static/player/hud/HUD_unselected_toolbar.png" id="3_17vhq"]
 [ext_resource type="Script" path="res://src/player/HUDManager.gd" id="3_swvg0"]
 [ext_resource type="Script" path="res://src/player/InventoryManager.gd" id="4_g8g2s"]
+[ext_resource type="StyleBox" uid="uid://bmtpw1t5ge0fx" path="res://resources/player/HUD/inventory_slot_unselected.tres" id="5_0l33w"]
+[ext_resource type="Texture2D" uid="uid://b1h05esh6dlur" path="res://assets/static/player/hud/marker.png" id="6_wgqo7"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hbd7t"]
 
@@ -51,40 +52,49 @@ size_flags_vertical = 10
 mouse_filter = 1
 script = ExtResource("3_swvg0")
 
-[node name="MarginContainer" type="MarginContainer" parent="HUD"]
+[node name="ThrowPower" type="Label" parent="HUD"]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -320.0
-offset_top = -95.0
-offset_right = 320.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_constants/margin_bottom = 15
+anchors_preset = -1
+anchor_left = 0.980417
+anchor_top = 0.5075
+anchor_right = 0.980417
+anchor_bottom = 0.5075
+offset_left = -75.0
+offset_top = -11.0
+offset_bottom = 12.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "0"
+horizontal_alignment = 2
+metadata/_edit_use_anchors_ = true
 
-[node name="ToolbarContainer" type="VSplitContainer" parent="HUD/MarginContainer"]
+[node name="Inventory" type="VSplitContainer" parent="HUD"]
 layout_mode = 2
+offset_left = 80.0
+offset_top = 290.0
+offset_right = 720.0
+offset_bottom = 385.0
 script = ExtResource("4_g8g2s")
 
-[node name="ItemName" type="Label" parent="HUD/MarginContainer/ToolbarContainer"]
+[node name="ItemName" type="Label" parent="HUD/Inventory"]
 layout_mode = 2
 text = "Item Name"
 horizontal_alignment = 1
 
-[node name="Toolbar" type="GridContainer" parent="HUD/MarginContainer/ToolbarContainer"]
+[node name="Toolbar" type="GridContainer" parent="HUD/Inventory"]
 custom_minimum_size = Vector2(640, 60)
 layout_mode = 2
 columns = 10
 
-[node name="0" type="Panel" parent="HUD/MarginContainer/ToolbarContainer/Toolbar"]
+[node name="0" type="Panel" parent="HUD/Inventory/Toolbar"]
+clip_contents = true
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_vertical = 4
+theme_override_styles/panel = ExtResource("5_0l33w")
 
-[node name="Background" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/0"]
+[node name="ItemImage" type="TextureRect" parent="HUD/Inventory/Toolbar/0"]
+clip_contents = true
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 1
 anchors_preset = 15
@@ -92,28 +102,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/0"]
-custom_minimum_size = Vector2(60, 60)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("3_17vhq")
-expand_mode = 2
-stretch_mode = 3
-
-[node name="1" type="Panel" parent="HUD/MarginContainer/ToolbarContainer/Toolbar"]
+[node name="1" type="Panel" parent="HUD/Inventory/Toolbar"]
+clip_contents = true
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_vertical = 4
+theme_override_styles/panel = ExtResource("5_0l33w")
 
-[node name="Background" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/1"]
+[node name="ItemImage" type="TextureRect" parent="HUD/Inventory/Toolbar/1"]
+clip_contents = true
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 1
 anchors_preset = 15
@@ -121,28 +121,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/1"]
-custom_minimum_size = Vector2(60, 60)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("3_17vhq")
-expand_mode = 2
-stretch_mode = 3
-
-[node name="2" type="Panel" parent="HUD/MarginContainer/ToolbarContainer/Toolbar"]
+[node name="2" type="Panel" parent="HUD/Inventory/Toolbar"]
+clip_contents = true
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_vertical = 4
+theme_override_styles/panel = ExtResource("5_0l33w")
 
-[node name="Background" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/2"]
+[node name="ItemImage" type="TextureRect" parent="HUD/Inventory/Toolbar/2"]
+clip_contents = true
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 1
 anchors_preset = 15
@@ -150,28 +140,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/2"]
-custom_minimum_size = Vector2(60, 60)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("3_17vhq")
-expand_mode = 2
-stretch_mode = 3
-
-[node name="3" type="Panel" parent="HUD/MarginContainer/ToolbarContainer/Toolbar"]
+[node name="3" type="Panel" parent="HUD/Inventory/Toolbar"]
+clip_contents = true
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_vertical = 4
+theme_override_styles/panel = ExtResource("5_0l33w")
 
-[node name="Background" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/3"]
+[node name="ItemImage" type="TextureRect" parent="HUD/Inventory/Toolbar/3"]
+clip_contents = true
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 1
 anchors_preset = 15
@@ -179,28 +159,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/3"]
-custom_minimum_size = Vector2(60, 60)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("3_17vhq")
-expand_mode = 2
-stretch_mode = 3
-
-[node name="4" type="Panel" parent="HUD/MarginContainer/ToolbarContainer/Toolbar"]
+[node name="4" type="Panel" parent="HUD/Inventory/Toolbar"]
+clip_contents = true
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_vertical = 4
+theme_override_styles/panel = ExtResource("5_0l33w")
 
-[node name="Background" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/4"]
+[node name="ItemImage" type="TextureRect" parent="HUD/Inventory/Toolbar/4"]
+clip_contents = true
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 1
 anchors_preset = 15
@@ -208,28 +178,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/4"]
-custom_minimum_size = Vector2(60, 60)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("3_17vhq")
-expand_mode = 2
-stretch_mode = 3
-
-[node name="5" type="Panel" parent="HUD/MarginContainer/ToolbarContainer/Toolbar"]
+[node name="5" type="Panel" parent="HUD/Inventory/Toolbar"]
+clip_contents = true
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_vertical = 4
+theme_override_styles/panel = ExtResource("5_0l33w")
 
-[node name="Background" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/5"]
+[node name="ItemImage" type="TextureRect" parent="HUD/Inventory/Toolbar/5"]
+clip_contents = true
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 1
 anchors_preset = 15
@@ -237,28 +197,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/5"]
-custom_minimum_size = Vector2(60, 60)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("3_17vhq")
-expand_mode = 2
-stretch_mode = 3
-
-[node name="6" type="Panel" parent="HUD/MarginContainer/ToolbarContainer/Toolbar"]
+[node name="6" type="Panel" parent="HUD/Inventory/Toolbar"]
+clip_contents = true
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_vertical = 4
+theme_override_styles/panel = ExtResource("5_0l33w")
 
-[node name="Background" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/6"]
+[node name="ItemImage" type="TextureRect" parent="HUD/Inventory/Toolbar/6"]
+clip_contents = true
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 1
 anchors_preset = 15
@@ -266,28 +216,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/6"]
-custom_minimum_size = Vector2(60, 60)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("3_17vhq")
-expand_mode = 2
-stretch_mode = 3
-
-[node name="7" type="Panel" parent="HUD/MarginContainer/ToolbarContainer/Toolbar"]
+[node name="7" type="Panel" parent="HUD/Inventory/Toolbar"]
+clip_contents = true
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_vertical = 4
+theme_override_styles/panel = ExtResource("5_0l33w")
 
-[node name="Background" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/7"]
+[node name="ItemImage" type="TextureRect" parent="HUD/Inventory/Toolbar/7"]
+clip_contents = true
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 1
 anchors_preset = 15
@@ -295,28 +235,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/7"]
-custom_minimum_size = Vector2(60, 60)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("3_17vhq")
-expand_mode = 2
-stretch_mode = 3
-
-[node name="8" type="Panel" parent="HUD/MarginContainer/ToolbarContainer/Toolbar"]
+[node name="8" type="Panel" parent="HUD/Inventory/Toolbar"]
+clip_contents = true
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_vertical = 4
+theme_override_styles/panel = ExtResource("5_0l33w")
 
-[node name="Background" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/8"]
+[node name="ItemImage" type="TextureRect" parent="HUD/Inventory/Toolbar/8"]
+clip_contents = true
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 1
 anchors_preset = 15
@@ -324,28 +254,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/8"]
-custom_minimum_size = Vector2(60, 60)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("3_17vhq")
-expand_mode = 2
-stretch_mode = 3
-
-[node name="9" type="Panel" parent="HUD/MarginContainer/ToolbarContainer/Toolbar"]
+[node name="9" type="Panel" parent="HUD/Inventory/Toolbar"]
+clip_contents = true
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_vertical = 4
+theme_override_styles/panel = ExtResource("5_0l33w")
 
-[node name="Background" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/9"]
+[node name="ItemImage" type="TextureRect" parent="HUD/Inventory/Toolbar/9"]
+clip_contents = true
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 1
 anchors_preset = 15
@@ -353,18 +273,20 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_17vhq")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="ItemImage" type="TextureRect" parent="HUD/MarginContainer/ToolbarContainer/Toolbar/9"]
-custom_minimum_size = Vector2(60, 60)
+[node name="TextureRect" type="TextureRect" parent="HUD"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -7.0
+offset_top = -7.0
+offset_right = 7.0
+offset_bottom = 7.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_17vhq")
-expand_mode = 2
-stretch_mode = 3
+texture = ExtResource("6_wgqo7")
